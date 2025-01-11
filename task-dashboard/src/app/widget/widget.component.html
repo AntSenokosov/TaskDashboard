@@ -1,9 +1,3 @@
-<div *ngIf="widget.type === 'chart'">
-    <canvas
-      baseChart
-      [datasets]="chartData.datasets"
-      [labels]="chartData.labels"
-      [options]="chartOptions"
-      [chartType]="chartType">
-    </canvas>
-  </div>
+<div>
+  <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+</div>
