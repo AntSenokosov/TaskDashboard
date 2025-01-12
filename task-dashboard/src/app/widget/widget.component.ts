@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { WidgetDataService } from './widgetdata.service';
 
 @Component({
   selector: 'app-widget',
@@ -15,27 +16,15 @@ export class WidgetComponent implements OnInit {
 
   chartOptions: any;
 
-  constructor() {}
+  constructor(private widgetDataService: WidgetDataService) {}
 
   ngOnInit(): void {
     this.initializeChart();
   }
 
   initializeChart(): void {
-    this.chartOptions = {
-      title: {
-        text: "Basic Column Chart in Angular"
-      },
-      data: [{
-        type: "column",
-        dataPoints: [
-          { label: "Apple",  y: 10  },
-          { label: "Orange", y: 15  },
-          { label: "Banana", y: 25  },
-          { label: "Mango",  y: 30  },
-          { label: "Grape",  y: 28  }
-        ]
-      }]                
-    };
+    this.widgetDataService.getChartData().subscribe((data) => {
+      this.chartOptions = data;
+    });
   }
 }
