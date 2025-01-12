@@ -1,25 +1,31 @@
-import { Component } from '@angular/core';
-import { IDashboardModel } from './dashboard.model';
-import { CompactType, GridsterConfig, GridsterModule, GridType } from 'angular-gridster2'
+import { Component, OnInit } from '@angular/core';
+import { CompactType, GridsterConfig, GridsterItem, GridsterModule, GridType } from 'angular-gridster2'
 import { CommonModule } from '@angular/common';
+import { WidgetComponent } from '../widget/widget.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, GridsterModule],
+  imports: [CommonModule, GridsterModule, WidgetComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
-  dashboard = [
-    { type: 'chart', id: 1, x: 0, y: 0, rows: 2, cols: 3 },
-    { type: 'chart', id: 2, x: 3, y: 0, rows: 2, cols: 3 },
-  ];
+export class DashboardComponent implements OnInit {
+  public dashboard! : Array<any>;
+  public options!: GridsterConfig;
+  
+  ngOnInit(): void {
+    this.options = {
+      gridType: GridType.Fit,
+      compactType: CompactType.None,
+      draggable: { enabled: true },
+      fixedColWidth: 500,
+      fixedRowHeight: 500,
+    };
 
-  options: GridsterConfig = {
-    gridType: GridType.Fit,
-    compactType: CompactType.None,
-    itemChangeCallback: (item) => console.log(item),
-    itemResizeCallback: (item) => console.log(item)
-  };
+    this.dashboard = [
+      { type: 'widget', x: 0, y: 0, cols: 2, rows: 2 },
+      { type: 'empty', x: 2, y: 0, cols: 2, rows: 2 },
+    ];
+  }
 }
